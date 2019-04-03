@@ -14,7 +14,7 @@
     		<visual>
       			<origin	xyz="0 0 0" rpy="0 0 0" />
       			<geometry>
-				<mesh filename="file:///home/rikako/Documents/hexazod/src/hexazod_description/meshes/thorax.STL" />
+				<mesh filename="file:///home/rikako/hexapod-walker/src/hexazod_description/meshes/thorax.STL" />
       			</geometry>
      			<material name="grey">
         			<color rgba="0.5 0.5 0.5 1" />
@@ -26,17 +26,17 @@
 	<xacro:property name="pi" value="3.1415926535897931" />
 
 <!-- Joint properties -->
-	<xacro:property name="joint_lower_limit" value="-${1.5}" />
-	<xacro:property name="joint_upper_limit" value="${1.5}" />
+	<xacro:property name="joint_lower_limit" value="-${pi/2}" />
+	<xacro:property name="joint_upper_limit" value="${pi/2}" />
 	<xacro:property name="joint_effort" value="10000" />
 	<xacro:property name="joint_velocity" value="100" />
 
 <!-- Leg macros -->
-	<xacro:macro name="leg" params="side num x y angle">
+	<xacro:macro name="leg" params="side num x y">
 
 <!-- Build leg -->
   	<joint name="leg_center_joint_${side}${num}" type="fixed">
-    		<origin xyz="${x} ${y} 0" rpy="0 0 0" />
+    		<origin xyz="${x} ${y} 0" rpy="0 0 0" />  <!-- xyz="0.087598 -0.050575 0" -->
     		<parent link="thorax" />
     		<child link="leg_center_${side}${num}" />
   	</joint>
@@ -44,7 +44,7 @@
     	<link name="leg_center_${side}${num}" />
 
 	<joint name="coxa_joint_${side}${num}" type="revolute">
-    		<origin xyz="0 0 0" rpy="0 0 ${angle}" />
+    		<origin xyz="0 0 0" rpy="0 0 -1.05" />
     		<parent link="leg_center_${side}${num}" />
     		<child link="coxa_${side}${num}" />
     		<axis xyz="0 0 -1" />
@@ -55,7 +55,7 @@
     		<visual>
       			<origin xyz="0 0 0" rpy="0 0 0" />
       			<geometry>
-        			<mesh filename="file:///home/rikako/Documents/hexazod/src/hexazod_description/meshes/coxa_${side}.STL" />
+        			<mesh filename="file:///home/rikako/hexapod-walker/src/hexazod_description/meshes/coxa_${side}.STL" />
       			</geometry>
       			<material name="">
         			<color rgba="0.7 0.7 0 1" />
@@ -64,7 +64,7 @@
   	</link>
 
   	<joint name="femur_joint_${side}${num}" type="revolute">
-    		<origin xyz="0.0294 0 0" rpy="-${pi/2} 0 0" />
+    		<origin xyz="0.0294 0 0" rpy="-1.5708 0 0" />
     		<parent link="coxa_${side}${num}" />
     		<child link="femur_${side}${num}" />
     		<axis xyz="0 0 -1" />
@@ -75,7 +75,7 @@
     		<visual>
       			<origin xyz="0 0 0" rpy="0 0 0" />
       			<geometry>
-        			<mesh filename="file:///home/rikako/Documents/hexazod/src/hexazod_description/meshes/femur_${side}.STL" />
+        			<mesh filename="file:///home/rikako/hexapod-walker/src/hexazod_description/meshes/femur_${side}.STL" />
       			</geometry>
       			<material name="">
         			<color rgba="0 0.7 0.7 1" />
@@ -84,7 +84,7 @@
   	</link>
 
   	<joint name="tibia_joint_${side}${num}" type="revolute">
-    		<origin xyz="0.08 0 0" rpy="${pi} 0 ${pi/2}" />
+    		<origin xyz="0.08 0 0" rpy="3.1416 0 1.57" />
     		<parent link="femur_${side}${num}" />
     		<child link="tibia_${side}${num}" />
     		<axis xyz="0 0 1" />
@@ -95,7 +95,7 @@
     		<visual>
       			<origin xyz="0 0 0" rpy="0 0 0.06" />
       			<geometry>
-       				<mesh filename="file:///home/rikako/Documents/hexazod/src/hexazod_description/meshes/tibia_${side}.STL" />
+       				<mesh filename="file:///home/rikako/hexapod-walker/src/hexazod_description/meshes/tibia_${side}.STL" />
       			</geometry>
       			<material name="">
         			<color rgba="0.7 0 0.7 1" />
@@ -104,7 +104,7 @@
   	</link>
 
   	<joint name="tibia_foot_joint_${side}${num}" type="fixed">
-    		<origin xyz="0.117 0 0" rpy="0 0 0" />
+    		<origin xyz="0.11145 0 0" rpy="0 0 0" />
     		<parent link="tibia_${side}${num}" />
     		<child link="tibia_foot_${side}${num}" />
   	</joint>
@@ -112,12 +112,6 @@
   	<link name="tibia_foot_${side}${num}" />
 	</xacro:macro>
 
-<!-- Build robot model -->
-	<xacro:leg side="r" num="1" x="0.087598" 	y="-0.050575" 	angle="-${pi/3}" />
-	<xacro:leg side="r" num="2" x="0" 		y="-0.06985" 	angle="-${pi/2}" />
-	<xacro:leg side="r" num="3" x="-0.087598" 	y="-0.050575" 	angle="-${pi*2/3}" />
-	<xacro:leg side="l" num="1" x="0.087598" 	y="0.050575"	angle="${pi/3}" />
-	<xacro:leg side="l" num="2" x="0" 		y="0.06985"	angle="${pi/2}" />
-	<xacro:leg side="l" num="3" x="-0.087598" 	y="0.050575" 	angle="${pi*2/3}" />
+	<xacro:leg side="r" num="1" x="0.087598" y="-0.050575" />
 
 </robot>
