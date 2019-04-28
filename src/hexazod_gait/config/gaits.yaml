@@ -1,0 +1,27 @@
+triangle:
+  - frame_1
+    - leg_1:
+      - x
+      - y
+      - z
+    - leg_2:
+      - x
+      - y
+      - z
+    - leg_2:
+      - x
+      - y
+      - z
+    - leg_2:
+      - x
+      - y
+      - z
+    - leg_2:
+      - x
+      - y
+      - z
+    - leg_2:
+      - x
+      - y
+      - z
+
